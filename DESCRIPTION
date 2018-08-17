@@ -1,0 +1,16 @@
+Package: G407
+Type: Package
+Title: Self use R codes
+Version: 0.1.0
+Author: Li Wang
+Maintainer: The package maintainer <purewangli@gmail.com>
+Description: Self use R code. 
+License: GPL-3
+Encoding: utf-8
+LazyData: TRUE
+Imports: 
+    ggsci,
+    tidyverse,
+    hsdar,
+    caret
+RoxygenNote: 6.1.0
