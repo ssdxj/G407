@@ -11,6 +11,7 @@
 #' @import hsdar
 #' @import ggpubr
 #' @import ggsci
+#' @import furrr
 
 library(ggplot2)
 library(ggpubr)

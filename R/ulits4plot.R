@@ -381,3 +381,25 @@ train_residual_plot <- function(train_obj){
   return(p)
 }
 
+
+# LbyL --------------------------------------------------------------------
+
+#' heatmap plot of \code{\link{LbyL_wrapper}} function result.
+#'
+#' @param df \code{\link{LbyL_wrapper}} function result
+#'
+#' @return p(ggplot2)
+#' @export
+LbyL_heatmap_R2 <- function(df){
+  if(!inherits(df, 'data.frame')) df <- as.data.frame(df)
+  ggplot(df) +
+    geom_tile(aes(wl2, wl1, fill = r2)) +
+    coord_equal() +
+    scale_fill_viridis_c() +
+    labs(x = 'Band2/(nm)', y = 'Band1/(nm)', fill = 'R2') +
+    theme_pubr() +
+    theme(
+      legend.position = 'right'
+    )
+}
+
