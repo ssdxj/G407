@@ -98,3 +98,42 @@ get_indexCV <- function(x, fold = 10, times = 5) {
 
   return(index)
 }
+
+
+# prepare for train -------------------------------------------------------
+
+#' prepare obj (list(inTrain, spc_full, indexCV)) for training workflow
+#' \describe{
+#' \item{inTrain}{\code{\link[G407]{get_inTrain_respOrder_withGroup}}}
+#' \item{spc_full}{the spc}
+#' \item{indexCV}{\code{\line[G407]{get_indexCV}}}
+#' }
+#'
+#' @param spc ful spc
+#' @param biochemphy name of response in SI, dafault 'LAI'
+#' @param group  name of group in SI, default 'stage'
+#' @param fold  n times of cv, default 10
+#' @param times n folds of cv, default 5
+#'
+#' @return list(inTrain, spc_full, indexCV)
+#'
+#'@export
+prepare_obj4wf <- function(spc, biochemphy = 'LAI', group = 'stage', fold = 10, times = 5) {
+
+  # get inTrain index
+  y <- SI(spc)[[biochemphy]]
+  group <- SI(spc)[[group]]
+  inTrain <- G407::get_inTrain_respOrder_withGroup(y, group)
+
+  # CV index
+  y <- y[inTrain]
+  indexCV <- G407::get_indexCV(y, fold = fold, times = times)
+
+  # out
+  list(
+    inTrain = inTrain,
+    spc_full = spc,
+    indexCV = indexCV
+  )
+}
+
