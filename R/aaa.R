@@ -9,8 +9,12 @@
 #' @import forcats
 #' @import caret
 #' @import hsdar
+#' @import ggpubr
+#' @import ggsci
 
 library(ggplot2)
+library(ggpubr)
+library(ggsci)
 library(tidyverse)
 
 theme_set(theme_pubr())
