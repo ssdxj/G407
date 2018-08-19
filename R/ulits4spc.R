@@ -174,15 +174,42 @@ spc_ave <- function(spc, by = 'SampleID'){
   return(out)
 }
 
-#' Calc r between reflectance and one of SI
-#' @param spc: spc obj
-#' @param biochemphy: name of SI
-#' @return tibble with estiamte and pvalue
+
+#' Bandwise cor with responser
+#'
+#' @param spc  spc
+#' @param biochemphy name of responsor in SI
+#'
+#' @return df with col ('wl', 'estimate', 'p.value')
 #' @export
-spc_cor  <- function(spc, biochemphy, method = 'pearson', use = 'complete.obs') {
-  map(as.data.frame(spc), cor.test, SI(spc)[[biochemphy]],
-      method = method, use = use) %>%
-    map_df(function(x) tibble(esimate = x$estimate, pvalue = x$p.value),
-           .id = 'wl') %>%
+spc_cor <- function(spc, biochemphy){
+  df <- spc_2df(spc) %>%
+    dplyr::select(matches('\\d+')) %>%
+    map(cor.test, SI(spc)[[biochemphy]]) %>%
+    map_df(function(fit){fit[c('estimate', 'p.value')]}, .id = 'wl') %>%
     mutate(wl = parse_double(wl))
+
+  names(df) <- c('wl', 'estimate', 'pvalue')
+  return(df)
+}
+
+
+#' wrapper of \code{\link{spc_cor}} doing bandwise band cor with responser
+#' grouped by stage
+#'
+#' @param stageValue levels of stage in SI
+#' @param spc spc
+#' @param biochemphy name of reponser in SI
+#'
+#' @return df
+#' @export
+spc_cor_stage <- function(stageValue, spc, biochemphy){
+  if(stageValue == 'full'){
+    spc_cor(spc, biochemphy)
+  } else {
+    spc_2df(spc) %>%
+      dplyr::filter(stage %in% stageValue) %>%
+      spc_fromDf() %>%
+      spc_cor(biochemphy)
+  }
 }

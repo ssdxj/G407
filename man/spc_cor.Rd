@@ -2,18 +2,18 @@
 % Please edit documentation in R/ulits4spc.R
 \name{spc_cor}
 \alias{spc_cor}
-\title{Calc r between reflectance and one of SI}
+\title{Bandwise cor with responser}
 \usage{
-spc_cor(spc, biochemphy, method = "pearson", use = "complete.obs")
+spc_cor(spc, biochemphy)
 }
 \arguments{
-\item{spc:}{spc obj}
+\item{spc}{spc}
 
-\item{biochemphy:}{name of SI}
+\item{biochemphy}{name of responsor in SI}
 }
 \value{
-tibble with estiamte and pvalue
+df with col ('wl', 'estimate', 'p.value')
 }
 \description{
-Calc r between reflectance and one of SI
+Bandwise cor with responser
 }
