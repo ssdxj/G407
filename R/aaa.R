@@ -12,6 +12,7 @@
 #' @import ggpubr
 #' @import ggsci
 #' @import furrr
+#' @import minpack.lm
 
 library(ggplot2)
 library(ggpubr)
