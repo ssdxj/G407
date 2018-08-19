@@ -6,7 +6,7 @@
 \describe{
 \item{inTrain}{\code{\link[G407]{get_inTrain_respOrder_withGroup}}}
 \item{spc_full}{the spc}
-\item{indexCV}{\code{\line[G407]{get_indexCV}}}
+\item{indexCV}{\code{\link[G407]{get_indexCV}}}
 }}
 \usage{
 prepare_obj4wf(spc, biochemphy = "LAI", group = "stage", fold = 10,
@@ -31,6 +31,6 @@ prepare obj (list(inTrain, spc_full, indexCV)) for training workflow
 \describe{
 \item{inTrain}{\code{\link[G407]{get_inTrain_respOrder_withGroup}}}
 \item{spc_full}{the spc}
-\item{indexCV}{\code{\line[G407]{get_indexCV}}}
+\item{indexCV}{\code{\link[G407]{get_indexCV}}}
 }
 }

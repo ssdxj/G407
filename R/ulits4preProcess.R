@@ -106,7 +106,7 @@ get_indexCV <- function(x, fold = 10, times = 5) {
 #' \describe{
 #' \item{inTrain}{\code{\link[G407]{get_inTrain_respOrder_withGroup}}}
 #' \item{spc_full}{the spc}
-#' \item{indexCV}{\code{\line[G407]{get_indexCV}}}
+#' \item{indexCV}{\code{\link[G407]{get_indexCV}}}
 #' }
 #'
 #' @param spc ful spc
