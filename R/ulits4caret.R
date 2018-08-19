@@ -56,6 +56,7 @@ pretty_values <- function(x) map_chr(x, pretty_value)
 #' @export
 train_add_curveDf <- function(train_obj) {
   md <- train_obj$method
+  if(md %not in% c('lm', 'lm2', 'exp', 'bear')) return(NULL)
 
   # train data
   df <- train_obj$add_trainDf
