@@ -9,6 +9,7 @@
 #' }
 #'
 #' @return spc obj
+#' @export
 predict_keras_spc <- function(model, spc, wl = NULL){
   # spc to matrix
   newdata <- spectra(spc)
