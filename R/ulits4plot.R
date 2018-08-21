@@ -119,6 +119,14 @@ train_plot <- function(obj){
       geom_point(aes(color = sigma)) +
       geom_line(aes(color = sigma)) +
       scale_color_npg()
+  } else if(method == 'nnet'){
+    p <- df %>%
+      mutate(decay = pretty_values(decay)) %>%
+      mutate(units = size) %>%
+      ggplot(aes(size, RMSE)) +
+      geom_point(aes(color = decay)) +
+      geom_line(aes(color = decay)) +
+      scale_color_npg()
   } else if(method == 'rf'){
     p <- df %>%
       mutate(ntree = as.factor(ntree)) %>%
