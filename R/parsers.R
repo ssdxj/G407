@@ -98,7 +98,7 @@ parser_sig <- function(fpath) {
 
   # handle the meta part
   # name from file
-  out$name1 <- file_path_sans_ext(toupper(basename(fpath)))
+  out$name1 <- tools::file_path_sans_ext(toupper(basename(fpath)))
 
   # longitude
   char_greped <- grep("^longitude", sig_meta, value = TRUE)
@@ -135,7 +135,7 @@ parser_sig <- function(fpath) {
   out$latitude <- latitude
 
   # is moc
-  char.greped <- grep("^factors", sig.meta, value = TRUE)
+  char.greped <- grep("^factors", sig_meta, value = TRUE)
   # out$isMOC <- ifelse(grep('Overlap: Remove', char.greped), 'MOC', 'NOMOC')
 
   # calc FieldID from file name
