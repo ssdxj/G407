@@ -147,7 +147,22 @@ train_add_gof <- function(train_obj) {
   return(out)
 }
 
-#' get model param
+#' get bear coefs from caret::train obj
+#'
+#' @param trainObj
+#'
+#' @return charactor
+#' @export
+train_add_bearCoefs <- function(trainObj){
+  param <- coef(trainObj$finalModel) %>% round(2)
+  param_nm <- names(param)
+  param_str <- map2_chr(param_nm, param, ~sprintf("%s=%s", .x, .y))
+  add_param <- paste(param_str, collapse = ",")
+  return(add_param)
+}
+
+
+#' get (ML) model param
 #'
 #' @param train_obj caret::train obj
 #'
@@ -156,7 +171,7 @@ train_add_gof <- function(train_obj) {
 train_add_param <- function(trainObj) {
   param <- trainObj$bestTune
   param_nm <- colnames(param)
-  param_value <- param[1, ] %>% map(pretty_value)
+  param_value <- param[1, ] %>% map(pretty_values)
   param_str <- map2_chr(param_nm, param_value, ~sprintf("%s=%s", .x, .y))
   add_param <- paste(param_str, collapse = ",")
   return(add_param)
@@ -201,7 +216,11 @@ train_update <- function(train_obj, spc_inTrain, spc_Test, newdata,
   }
 
   gof <- train_add_gof(train_obj)
-  param <- train_add_param(train_obj)
+  if(train_obj$method == 'bear'){
+    param <- train_add_bearCoefs(train_obj)
+  } else {
+    param <- train_add_param(train_obj)
+  }
   curveDf <- train_add_curveDf(train_obj)
 
   train_obj$add_gof <- gof
