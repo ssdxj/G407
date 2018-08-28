@@ -2,7 +2,7 @@
 % Please edit documentation in R/ulits4caret.R
 \name{train_add_param}
 \alias{train_add_param}
-\title{get model param}
+\title{get (ML) model param}
 \usage{
 train_add_param(trainObj)
 }
@@ -13,5 +13,5 @@ train_add_param(trainObj)
 str
 }
 \description{
-get model param
+get (ML) model param
 }
