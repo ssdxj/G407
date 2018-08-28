@@ -261,27 +261,27 @@ calcVI <- function(index, spc, sensor = 'SVC', ...) {
     vi <- rededge(spc)$Rp
   } else if (index == "Rs") {
     vi <- rededge(spc)$Rs
-  } else if (index == "NDVI705") { # incase rededge NDVI, DVI, CI
+  } else if (index == "NDVI_705") { # incase rededge NDVI, DVI, CI
     b1 <- param$r705
     b2 <- param$bNIR
     vi <- (b2 - b1) / (b2 + b1)
-  } else if (index == "NDVI740") {
+  } else if (index == "NDVI_740") {
     b1 <- param$r740
     b2 <- param$bNIR
     vi <- (b2 - b1) / (b2 + b1)
-  } else if (index == "NDVI783") {
+  } else if (index == "NDVI_783") {
     b1 <- param$r783
     b2 <- param$bNIR
     vi <- (b2 - b1) / (b2 + b1)
-  } else if (index == "DVI705") {
+  } else if (index == "DVI_705") {
     b1 <- param$r705
     b2 <- param$bNIR
     vi <- b2 - b1
-  } else if (index == "DVI740") {
+  } else if (index == "DVI_740") {
     b1 <- param$r740
     b2 <- param$bNIR
     vi <- b2 - b1
-  } else if (index == "DVI783") {
+  } else if (index == "DVI_783") {
     b1 <- param$r783
     b2 <- param$bNIR
     vi <- b2 - b1
