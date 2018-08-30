@@ -177,8 +177,7 @@ trains_plot <- function(objs) map(objs, train_plot)
 #' @return p(ggplot2) or list of p
 #'
 #' @export
-train_obsvspred_plot <- function(train_obj){
-
+train_obsVSpred_plot <- function(train_obj){
   trainDf <- train_obj$add_trainDf
   testDf <- train_obj$add_testDf
 
@@ -197,7 +196,8 @@ train_obsvspred_plot <- function(train_obj){
                 hjust = -0.1, vjust = 1.2,
                 data = gof) +
       geom_abline(intercept = 0, slope = 1) +
-      coord_equal(xlim = df_lim, ylim = df_lim)
+      coord_equal(xlim = df_lim, ylim = df_lim) +
+      ggpubr::theme_pubr()
 
     # case both train and test
   } else {
@@ -228,11 +228,11 @@ train_obsvspred_plot <- function(train_obj){
                 data = gof) +
       geom_abline(intercept = 0, slope = 1) +
       geom_blank(aes(obs, pred), data = df_lim) +
-      scale_x_continuous(breaks = pretty_breaks()) +
-      scale_y_continuous(breaks = pretty_breaks()) +
+      scale_x_continuous(breaks = scales::pretty_breaks()) +
+      scale_y_continuous(breaks = scales::pretty_breaks()) +
+      facet_grid(~key, scales = 'fixed') +
       coord_equal() +
-      facet_wrap(~key, scales = 'free') +
-      theme(aspect.ratio = 1)
+      ggpubr::theme_pubr()
   }
 }
 
@@ -245,7 +245,7 @@ train_obsvspred_plot <- function(train_obj){
 #' @return p(ggplot) or list of p
 #' @export
 #'
-trains_obsVsPred_plot <- function(train_objs, ...){
+trains_obsVSPred_plot <- function(train_objs, ...){
   out <- list()
   gof_df <- map_df(train_objs, 'add_gof', .id = 'tag') %>%
     mutate(Clabel = sprintf('Rsquared=%.2f\nRMSE=%.2f',
