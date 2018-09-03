@@ -118,22 +118,34 @@ get_indexCV <- function(x, fold = 10, times = 5) {
 #' @return list(inTrain, spc_full, indexCV)
 #'
 #'@export
-prepare_obj4wf <- function(spc, biochemphy = 'LAI', group = 'stage', fold = 10, times = 5) {
+prepare_obj4wf <- function(spc, biochemphy = 'LAI', group = 'stage',
+                           fold = 10, times = 5, isSplit = TRUE) {
 
-  # get inTrain index
-  y <- SI(spc)[[biochemphy]]
-  group <- SI(spc)[[group]]
-  inTrain <- G407::get_inTrain_respOrder_withGroup(y, group)
+  if(isSplit){
+    # get inTrain index
+    y <- SI(spc)[[biochemphy]]
+    group <- SI(spc)[[group]]
+    inTrain <- G407::get_inTrain_respOrder_withGroup(y, group)
 
-  # CV index
-  y <- y[inTrain]
-  indexCV <- G407::get_indexCV(y, fold = fold, times = times)
+    # CV index
+    y <- y[inTrain]
+    indexCV <- G407::get_indexCV(y, fold = fold, times = times)
 
-  # out
-  list(
-    inTrain = inTrain,
-    spc_full = spc,
-    indexCV = indexCV
-  )
+    # out
+    out <- list(
+      inTrain = inTrain,
+      spc_full = spc,
+      indexCV = indexCV
+    )
+  } else {
+    y <- SI(spc)[[biochemphy]]
+    indexCV <- G407::get_indexCV(y, fold = fold, times = times)
+    out <- list(
+      spc_full = spc,
+      indexCV = indexCV
+    )
+  }
+
+  return(out)
 }
 
