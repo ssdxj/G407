@@ -88,10 +88,10 @@ get_inTrain_fromTestSPC <- function(input_full, input_Test) {
 #'
 #' @return list of cv index
 #' @export
-get_indexCV <- function(x, fold = 10, times = 5) {
+get_indexCV <- function(x, folds = 10, times = 5) {
   index <- map(3^(1:times - 3), function(seed) {
     set.seed(seed)
-    createFolds(x, k = fold, returnTrain = TRUE)
+    createFolds(x, k = folds, returnTrain = TRUE)
   })
   names(index) <- paste("Round", 1:times, sep = "")
   index <- unlist(index, recursive = FALSE)
@@ -129,7 +129,7 @@ prepare_obj4wf <- function(spc, biochemphy, group, folds, times, isSplit) {
 
     # CV index
     y <- y[inTrain]
-    indexCV <- G407::get_indexCV(y, fold = fold, times = times)
+    indexCV <- G407::get_indexCV(y, folds = folds, times = times)
 
     # out
     out <- list(
@@ -139,7 +139,7 @@ prepare_obj4wf <- function(spc, biochemphy, group, folds, times, isSplit) {
     )
   } else {
     y <- SI(spc)[[biochemphy]]
-    indexCV <- G407::get_indexCV(y, fold = fold, times = times)
+    indexCV <- G407::get_indexCV(y, folds = folds, times = times)
     out <- list(
       spc_full = spc,
       indexCV = indexCV

@@ -2,10 +2,10 @@
 % Please edit documentation in R/wrapper_LbyL.R
 \name{LbyL_stat_fun_r2}
 \alias{LbyL_stat_fun_r2}
-\title{stat_fun for \code{\link{wrapper_LbyL}}, to calc r2 of lm fit}
+\title{stat_fun for \code{\link{wrapper_LbyL}} to calc r2 of lm fit}
 \usage{
 LbyL_stat_fun_r2(x, y)
 }
 \description{
-stat_fun for \code{\link{wrapper_LbyL}}, to calc r2 of lm fit
+stat_fun for \code{\link{wrapper_LbyL}} to calc r2 of lm fit
 }

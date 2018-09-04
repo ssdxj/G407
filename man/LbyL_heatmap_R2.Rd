@@ -2,16 +2,16 @@
 % Please edit documentation in R/ulits4plot.R
 \name{LbyL_heatmap_R2}
 \alias{LbyL_heatmap_R2}
-\title{heatmap plot of \code{\link{LbyL_wrapper}} function result.}
+\title{heatmap plot of \code{\link{wrapper_LbyL}} function result.}
 \usage{
 LbyL_heatmap_R2(df)
 }
 \arguments{
-\item{df}{\code{\link{LbyL_wrapper}} function result}
+\item{df}{\code{\link{wrapper_LbyL}} function result}
 }
 \value{
 p(ggplot2)
 }
 \description{
-heatmap plot of \code{\link{LbyL_wrapper}} function result.
+heatmap plot of \code{\link{wrapper_LbyL}} function result.
 }

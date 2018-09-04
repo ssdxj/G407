@@ -238,7 +238,7 @@ train_obsVSpred_plot <- function(train_obj){
 
 
 
-#' wrapper of \code{\link{train_obsvspred_plot}} for list of caret::train objs
+#' wrapper of \code{\link{train_obsVSpred_plot}} for list of caret::train objs
 #' @param train_objs list of caret::train obj
 #' (updated with add_trainDf, add_testDf, add_gof)
 #'
@@ -392,9 +392,9 @@ train_residual_plot <- function(train_obj){
 
 # LbyL --------------------------------------------------------------------
 
-#' heatmap plot of \code{\link{LbyL_wrapper}} function result.
+#' heatmap plot of \code{\link{wrapper_LbyL}} function result.
 #'
-#' @param df \code{\link{LbyL_wrapper}} function result
+#' @param df \code{\link{wrapper_LbyL}} function result
 #'
 #' @return p(ggplot2)
 #' @export

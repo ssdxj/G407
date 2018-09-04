@@ -4,14 +4,14 @@
 \alias{get_indexCV}
 \title{Create repeated n fold corssvalidation index}
 \usage{
-get_indexCV(x, fold = 10, times = 5)
+get_indexCV(x, folds = 10, times = 5)
 }
 \arguments{
 \item{x}{numerical vector(normally the inTrain part of response vector)}
 
-\item{fold}{n folds}
-
 \item{times}{n times}
+
+\item{fold}{n folds}
 }
 \value{
 list of cv index

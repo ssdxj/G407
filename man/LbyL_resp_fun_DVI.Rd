@@ -2,10 +2,10 @@
 % Please edit documentation in R/wrapper_LbyL.R
 \name{LbyL_resp_fun_DVI}
 \alias{LbyL_resp_fun_DVI}
-\title{resp_fun for \code{\link{wrapper_LbyL}}, to calc DVI index}
+\title{resp_fun for \code{\link{wrapper_LbyL}} to calc DVI index}
 \usage{
 LbyL_resp_fun_DVI(b1, b2)
 }
 \description{
-resp_fun for \code{\link{wrapper_LbyL}}, to calc DVI index
+resp_fun for \code{\link{wrapper_LbyL}} to calc DVI index
 }
