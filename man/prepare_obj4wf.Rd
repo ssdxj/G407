@@ -9,19 +9,20 @@
 \item{indexCV}{\code{\link[G407]{get_indexCV}}}
 }}
 \usage{
-prepare_obj4wf(spc, biochemphy = "LAI", group = "stage", fold = 10,
-  times = 5)
+prepare_obj4wf(spc, biochemphy, group, folds, times, isSplit)
 }
 \arguments{
 \item{spc}{ful spc}
 
-\item{biochemphy}{name of response in SI, dafault 'LAI'}
+\item{biochemphy}{name of response in SI}
 
-\item{group}{name of group in SI, default 'stage'}
+\item{group}{name of group in SI}
 
-\item{fold}{n times of cv, default 10}
+\item{folds}{for cv}
 
-\item{times}{n folds of cv, default 5}
+\item{times}{for cv}
+
+\item{isSplit}{whether inTrain/Test split}
 }
 \value{
 list(inTrain, spc_full, indexCV)

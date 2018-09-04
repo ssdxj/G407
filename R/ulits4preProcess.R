@@ -110,16 +110,16 @@ get_indexCV <- function(x, fold = 10, times = 5) {
 #' }
 #'
 #' @param spc ful spc
-#' @param biochemphy name of response in SI, dafault 'LAI'
-#' @param group  name of group in SI, default 'stage'
-#' @param fold  n times of cv, default 10
-#' @param times n folds of cv, default 5
+#' @param biochemphy name of response in SI
+#' @param group  name of group in SI
+#' @param times for cv
+#' @param folds for cv
+#' @param isSplit whether inTrain/Test split
 #'
 #' @return list(inTrain, spc_full, indexCV)
 #'
 #'@export
-prepare_obj4wf <- function(spc, biochemphy = 'LAI', group = 'stage',
-                           fold = 10, times = 5, isSplit = TRUE) {
+prepare_obj4wf <- function(spc, biochemphy, group, folds, times, isSplit) {
 
   if(isSplit){
     # get inTrain index
