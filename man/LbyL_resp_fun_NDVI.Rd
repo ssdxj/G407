@@ -2,10 +2,10 @@
 % Please edit documentation in R/wrapper_LbyL.R
 \name{LbyL_resp_fun_NDVI}
 \alias{LbyL_resp_fun_NDVI}
-\title{resp_fun for \code{\link{wrapper_LbyL}}, to calc NDVI index}
+\title{resp_fun for \code{\link{wrapper_LbyL}} to calc NDVI index}
 \usage{
 LbyL_resp_fun_NDVI(b1, b2)
 }
 \description{
-resp_fun for \code{\link{wrapper_LbyL}}, to calc NDVI index
+resp_fun for \code{\link{wrapper_LbyL}} to calc NDVI index
 }

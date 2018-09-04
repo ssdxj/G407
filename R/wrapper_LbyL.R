@@ -1,23 +1,22 @@
-
-#' stat_fun for \code{\link{wrapper_LbyL}}, to calc r2 of lm fit
+#' stat_fun for \code{\link{wrapper_LbyL}} to calc r2 of lm fit
 #' @export
 LbyL_stat_fun_r2  <- function(x, y) {
   summary(lm(y~x, data = data.frame(x = x, y = y)))[['r.squared']]
 }
 
-#' resp_fun for \code{\link{wrapper_LbyL}}, to calc DVI index
+#' resp_fun for \code{\link{wrapper_LbyL}} to calc DVI index
 #' @export
 LbyL_resp_fun_DVI <- function(b1, b2){
   b2-b1
 }
 
-#' resp_fun for \code{\link{wrapper_LbyL}}, to calc NDVI index
+#' resp_fun for \code{\link{wrapper_LbyL}} to calc NDVI index
 #' @export
 LbyL_resp_fun_NDVI <- function(b1, b2){
   (b2-b1)/(b2+b1)
 }
 
-#' resp_fun for \code{\link{wrapper_LbyL}}, to calc SR index
+#' resp_fun for \code{\link{wrapper_LbyL}} to calc SR index
 #' @export
 LbyL_resp_fun_SR <- function(b1, b2){
   b2/b1

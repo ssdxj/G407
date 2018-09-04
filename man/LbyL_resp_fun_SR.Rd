@@ -2,10 +2,10 @@
 % Please edit documentation in R/wrapper_LbyL.R
 \name{LbyL_resp_fun_SR}
 \alias{LbyL_resp_fun_SR}
-\title{resp_fun for \code{\link{wrapper_LbyL}}, to calc SR index}
+\title{resp_fun for \code{\link{wrapper_LbyL}} to calc SR index}
 \usage{
 LbyL_resp_fun_SR(b1, b2)
 }
 \description{
-resp_fun for \code{\link{wrapper_LbyL}}, to calc SR index
+resp_fun for \code{\link{wrapper_LbyL}} to calc SR index
 }

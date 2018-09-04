@@ -2,7 +2,7 @@
 % Please edit documentation in R/ulits4plot.R
 \name{trains_obsVSPred_plot}
 \alias{trains_obsVSPred_plot}
-\title{wrapper of \code{\link{train_obsvspred_plot}} for list of caret::train objs}
+\title{wrapper of \code{\link{train_obsVSpred_plot}} for list of caret::train objs}
 \usage{
 trains_obsVSPred_plot(train_objs, ...)
 }
@@ -14,5 +14,5 @@ trains_obsVSPred_plot(train_objs, ...)
 p(ggplot) or list of p
 }
 \description{
-wrapper of \code{\link{train_obsvspred_plot}} for list of caret::train objs
+wrapper of \code{\link{train_obsVSpred_plot}} for list of caret::train objs
 }
