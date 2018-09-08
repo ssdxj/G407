@@ -4,7 +4,7 @@
 \alias{train_update}
 \title{update train obj (add_trainDf, add_testDf, add_gof)}
 \usage{
-train_update(train_obj, spc_inTrain, spc_Test, newdata,
+train_update(train_obj, spc_inTrain, spc_Test, newdata, biochemphy,
   newdata_inTrain = NULL)
 }
 \arguments{
@@ -15,6 +15,8 @@ train_update(train_obj, spc_inTrain, spc_Test, newdata,
 \item{spc_Test}{Speclib obj where Validation dataset from}
 
 \item{newdata}{in predict(fit, newdata = newdata)}
+
+\item{biochemphy}{y name in SI}
 
 \item{newdata_inTrain}{in predict(fit, newdata = newdata)}
 }

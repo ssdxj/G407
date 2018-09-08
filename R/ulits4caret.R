@@ -112,20 +112,13 @@ train_add_gof <- function(train_obj) {
 
   if (is.null(train_obj$add_trainDf)) return("NA")
 
-  # finalModel gof
-  out1 <- postResample(
-    pred = train_obj$add_trainDf$pred,
-    obs = train_obj$add_trainDf$obs
-  )
-
+  # train gof
+  out1 <- defaultSummary(train_obj$add_trainDf)
   names(out1) <- paste("Train", names(out1), sep = "")
 
   # Test gof
   if (!is.null(train_obj$add_testDf)) {
-    out2 <- postResample(
-      pred = train_obj$add_testDf$pred,
-      obs = train_obj$add_testDf$obs
-    )
+    out2 <- defaultSummary(train_obj$add_testDf)
     names(out2) <- paste("Test", names(out2), sep = "")
   } else {
     out2 <- NULL
@@ -185,10 +178,11 @@ train_add_param <- function(trainObj) {
 #' @param spc_Test  Speclib obj where Validation dataset from
 #' @param newdata in predict(fit, newdata = newdata)
 #' @param newdata_inTrain in predict(fit, newdata = newdata)
+#' @param biochemphy y name in SI
 #'
 #' @return updated caret::train Obj
 #' @export
-train_update <- function(train_obj, spc_inTrain, spc_Test, newdata,
+train_update <- function(train_obj, spc_inTrain, spc_Test, newdata, biochemphy,
                          newdata_inTrain = NULL) {
 
   # for special case, need pass in newdata_inTrain by hand
@@ -215,18 +209,24 @@ train_update <- function(train_obj, spc_inTrain, spc_Test, newdata,
       mutate_(obs = biochemphy)
   }
 
+  # calc gof
   gof <- train_add_gof(train_obj)
+  train_obj$add_gof <- gof
+
+
+  # calc param
   if(train_obj$method == 'bear'){
     param <- train_add_coefs(train_obj)
   } else {
     param <- train_add_param(train_obj)
   }
-  curveDf <- train_add_curveDf(train_obj)
-
-  train_obj$add_gof <- gof
-  train_obj$add_gof2 <- c(gof, param = param) %>% as.data.frame()
   train_obj$param <- param
+  train_obj$add_gof2 <- c(gof, param = param) %>% as.data.frame()
+
+  # calc curveDf
+  curveDf <- train_add_curveDf(train_obj)
   train_obj$add_curveDf <- curveDf
+
 
   return(train_obj)
 }
