@@ -1,2 +1,2 @@
-# G407
+# README
 Self use R codes
