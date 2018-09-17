@@ -26,6 +26,7 @@ modelInfo_kerasL1 <- function(){
     K <- keras::backend()
     K$clear_session()
     if(!is.matrix(x)) x <- as.matrix(x)
+    if(is.data.frame(y)) x <- as.matrix(y)
     model <- keras::keras_model_sequential()
 
     model %>%
