@@ -125,11 +125,11 @@ prepare_obj4wf <- function(spc, biochemphy, group, folds, times, isSplit) {
     # get inTrain index
     y <- SI(spc)[[biochemphy]]
     group <- SI(spc)[[group]]
-    inTrain <- G407::get_inTrain_respOrder_withGroup(y, group)
+    inTrain <- get_inTrain_respOrder_withGroup(y, group)
 
     # CV index
     y <- y[inTrain]
-    indexCV <- G407::get_indexCV(y, folds = folds, times = times)
+    indexCV <- get_indexCV(y, folds = folds, times = times)
 
     # out
     out <- list(
@@ -139,7 +139,7 @@ prepare_obj4wf <- function(spc, biochemphy, group, folds, times, isSplit) {
     )
   } else {
     y <- SI(spc)[[biochemphy]]
-    indexCV <- G407::get_indexCV(y, folds = folds, times = times)
+    indexCV <- get_indexCV(y, folds = folds, times = times)
     out <- list(
       spc_full = spc,
       indexCV = indexCV

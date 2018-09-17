@@ -50,7 +50,7 @@ spc_plot <- function(x, FUN = NULL) {
         ggplot() +
         geom_line(aes(wl, reflect, color = IDs)) +
         labs(x = 'Wavelength(nm)', y = 'Reflectance') +
-        scale_color_manual(values = paletteHm(length(FUN))) +
+        scale_color_manual(values = paletteHm()(length(FUN))) +
         theme_grey() +
         theme(
           legend.title = element_blank(),

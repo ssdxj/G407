@@ -1,23 +1,15 @@
 # global import -----------------------------------------------------------
-#' @import ggplot2
-#' @import purrr
-#' @import tibble
-#' @import dplyr
-#' @import tidyr
-#' @import stringr
-#' @import readr
-#' @import forcats
-#' @import caret
-#' @import hsdar
-#' @import ggpubr
+#' @import tidyverse
 #' @import ggsci
-#' @import furrr
-#' @import minpack.lm
+#' @import ggpubr
+#' @import kableExtra
+#' @importFrom hsdar SI spectra wavelength get_reflectance rededge vegindex nri
+#' @importFrom caret train preProcess trainControl postResample defaultSummary getTrainPerf
 
-library(ggplot2)
+library(tidyverse)
+library(kableExtra)
 library(ggpubr)
 library(ggsci)
-library(tidyverse)
 
 
 # common var --------------------------------------------------------------
@@ -139,7 +131,6 @@ themeDotplot <- function(){
 #' @return html
 #' @export
 df2html <- function(df, digits) {
-  library(kableExtra)
   df %>%
     mutate_if(is.numeric, round, digits) %>%
     kable(format = "html", digits = digits, escape = FALSE) %>%
