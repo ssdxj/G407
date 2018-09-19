@@ -2,7 +2,7 @@
 #'
 #' @return the modelInfo(list)
 #' @export
-modelInfo_exp <- function(){
+modelInfo_exp <- function() {
   modelInfo_exp <- getModelInfo("rlm")$rlm
   modelInfo_exp$label <- "exp nlsLM"
   modelInfo_exp$library <- "minpack.lm"

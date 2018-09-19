@@ -6,18 +6,17 @@
 #' @export
 #'
 index2factor <- function(x) {
-  if(is.factor(x)){
-    if(all(levels(x) %in% index_levels)){
+  if (is.factor(x)) {
+    if (all(levels(x) %in% index_levels)) {
       return(x)
     } else {
-      stop('index must not in factor!!! Use the Raw index name!!!')
+      stop("index must not in factor!!! Use the Raw index name!!!")
     }
   }
 
   # choose
   flag <- index_levels %in% x
   factor(x, levels = index_levels[flag], labels = index_plotmath[flag])
-
 }
 
 
@@ -27,18 +26,17 @@ index2factor <- function(x) {
 #' @return  x factored with labels for latex
 #' @export
 index2latex <- function(x) {
-  if(is.factor(x)){
-    if(all(levels(x) %in% index_levels)){
+  if (is.factor(x)) {
+    if (all(levels(x) %in% index_levels)) {
       return(x)
     } else {
-      stop('index must not in factor!!! Use the Raw index name!!!')
+      stop("index must not in factor!!! Use the Raw index name!!!")
     }
   }
 
   # choose
   flag <- index_levels %in% x
   factor(x, levels = index_levels[flag], labels = index_latex[flag])
-
 }
 
 
@@ -50,7 +48,7 @@ index2latex <- function(x) {
 #'
 #' @return update estimate
 #' @export
-lowCor2NA <- function(pvalue, estimate, thresh = 0.01){
+lowCor2NA <- function(pvalue, estimate, thresh = 0.01) {
   estimate[pvalue > thresh] <- NA
   return(estimate)
 }
@@ -73,4 +71,3 @@ RMSE2rRMSE <- function(tag, RMSEvec, obsMean) {
 
   return(RMSEvec)
 }
-

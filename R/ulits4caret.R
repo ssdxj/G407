@@ -56,7 +56,7 @@ pretty_values <- function(x) map_chr(x, pretty_value)
 #' @export
 train_add_curveDf <- function(train_obj) {
   md <- train_obj$method
-  if(md %not in% c('lm', 'lm2', 'exp', 'bear')) return(NULL)
+  if (md %not in% c("lm", "lm2", "exp", "bear")) return(NULL)
 
   # train data
   df <- train_obj$add_trainDf
@@ -146,7 +146,7 @@ train_add_gof <- function(train_obj) {
 #'
 #' @return charactor
 #' @export
-train_add_coefs <- function(trainObj){
+train_add_coefs <- function(trainObj) {
   param <- coef(trainObj$finalModel) %>% round(2)
   param_nm <- names(param)
   param_str <- map2_chr(param_nm, param, ~sprintf("%s=%s", .x, .y))
@@ -215,7 +215,7 @@ train_update <- function(train_obj, spc_inTrain, spc_Test, newdata, biochemphy,
 
 
   # calc param
-  if(train_obj$method == 'bear'){
+  if (train_obj$method == "bear") {
     param <- train_add_coefs(train_obj)
   } else {
     param <- train_add_param(train_obj)

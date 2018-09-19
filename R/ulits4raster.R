@@ -13,8 +13,8 @@
 #' @return Hyperspectral image obj(save output to fpath_out inviable)
 #' @export
 
-raster_calc <- function(fpath_in, fpath_out, wl,  nbands,  fun,  format = 'raster',
-                        noData = -9999, ...){
+raster_calc <- function(fpath_in, fpath_out, wl, nbands, fun, format = "raster",
+                        noData = -9999, ...) {
   # incase
   library(hsdar)
 
@@ -23,8 +23,10 @@ raster_calc <- function(fpath_in, fpath_out, wl,  nbands,  fun,  format = 'raste
   NAvalue(ra) <- noData
 
   # output handler
-  res <- writeStart(x = ra, filename = path_out, format = 'raster', nl = nbands,
-                    overwrite = TRUE)
+  res <- writeStart(
+    x = ra, filename = path_out, format = "raster", nl = nbands,
+    overwrite = TRUE
+  )
 
   # brick size
   tr <- blockSize(ra)
@@ -33,7 +35,7 @@ raster_calc <- function(fpath_in, fpath_out, wl,  nbands,  fun,  format = 'raste
   pb <- txtProgressBar(min = 0, max = tr$n, style = 3)
 
   # start loop
-  for (i in 1:tr$n){
+  for (i in 1:tr$n) {
     # subtract image block into spc
     v <- getValuesBlock(ra, row = tr$row[i], nrows = tr$nrows[i])
 

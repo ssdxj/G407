@@ -12,7 +12,7 @@ spc_2df <- function(spc) {
   # incase no attri
   if (ncol(attri) == 0) {
     out <- as.tibble(ref)
-  } else{
+  } else {
     out <- as.tibble(cbind(attri, ref))
   }
 
@@ -37,12 +37,12 @@ spc_2dfB <- function(spc) {
   # incase no attri
   if (ncol(attri) == 0) {
     out <- as.tibble(ref)
-  } else{
+  } else {
     out <- as.tibble(cbind(attri, ref))
   }
 
   # handle colnames
-  names(out) <- c(names(attri), paste('B', wavelength(spc), sep = '_'))
+  names(out) <- c(names(attri), paste("B", wavelength(spc), sep = "_"))
 
   return(out)
 }
@@ -56,7 +56,7 @@ spc_2dfB <- function(spc) {
 #'
 #' @return Speclib obj
 #' @export
-spc_fromDf <- function(df, bands_reg = '^(\\d)+(\\.\\d+)?$') {
+spc_fromDf <- function(df, bands_reg = "^(\\d)+(\\.\\d+)?$") {
   # do select
   spectra <- dplyr::select(df, matches(bands_reg))
   attri <- dplyr::select(df, -matches(bands_reg)) %>% data.frame()
@@ -76,20 +76,20 @@ spc_fromDf <- function(df, bands_reg = '^(\\d)+(\\.\\d+)?$') {
 #'
 #' @return spc obj
 #' @export
-spc_rbind <- function(...){
+spc_rbind <- function(...) {
   out <- NULL
 
   spc_list <- list(...)
   wl_list <- map(spc_list, wavelength)
   wl_check <- map_lgl(wl_list, all.equal, wl_list[[1]]) %>% all()
 
-  if(wl_check){
+  if (wl_check) {
     spc_df_list <- map(spc_list, spc_2df)
     spc_df <- do.call(rbind, spc_df_list)
     out <- spc_fromDf(spc_df)
     return(out)
   } else {
-    stop('wavelength not match, stop!!')
+    stop("wavelength not match, stop!!")
   }
 }
 
@@ -102,8 +102,8 @@ spc_rbind <- function(...){
 #' @return spc obj
 #' @export
 #'
-spc_inTrain <- function(spc, inTrain){
-  spc_fromDf(spc_2df(spc)[inTrain,])
+spc_inTrain <- function(spc, inTrain) {
+  spc_fromDf(spc_2df(spc)[inTrain, ])
 }
 
 #' melt the reflectance part of spc df
@@ -114,11 +114,11 @@ spc_inTrain <- function(spc, inTrain){
 #' @return tibble
 #' @export
 #'
-spc_melt <- function(x, band_reg = '^(\\d)+(\\.\\d+)?$') {
-  if (is.speclib(x)) x<- spc_2df(x)
+spc_melt <- function(x, band_reg = "^(\\d)+(\\.\\d+)?$") {
+  if (is.speclib(x)) x <- spc_2df(x)
 
   x %>%
-    gather(key = 'wl', value = 'reflect', matches(band_reg), convert = TRUE) %>%
+    gather(key = "wl", value = "reflect", matches(band_reg), convert = TRUE) %>%
     as.tibble()
 }
 
@@ -137,30 +137,31 @@ spc_melt <- function(x, band_reg = '^(\\d)+(\\.\\d+)?$') {
 #' @return spc obj
 #' @export
 #'
-spc_ave <- function(spc, by = 'SampleID'){
+spc_ave <- function(spc, by = "SampleID") {
   # melt
   spc_df_melt <- spc_melt(spc)
   out <- NULL
 
-  if (by == 'SampleID'){
-    out <- group_by(spc_df_melt, FieldID, SampleDate, PlotID, SampleID, wl )
-  } else if (by == 'PlotID'){
-    out <- group_by(spc_df_melt, FieldID, SampleDate, PlotID, wl )
-  } else if (by == 'Treatment'){
+  if (by == "SampleID") {
+    out <- group_by(spc_df_melt, FieldID, SampleDate, PlotID, SampleID, wl)
+  } else if (by == "PlotID") {
+    out <- group_by(spc_df_melt, FieldID, SampleDate, PlotID, wl)
+  } else if (by == "Treatment") {
     out <- group_by(spc_df_melt, FieldID, SampleDate, Treatment, wl)
-  } else if(by == 'SampleDate'){
+  } else if (by == "SampleDate") {
     out <- group_by(spc_df_melt, FieldID, SampleDate, wl)
   } else {
-    stop('Error in parameter value!!!')
+    stop("Error in parameter value!!!")
   }
 
   # handle the longitude and latitude
-  if (all(c('longitude', 'latitude') %in% names(df))){
+  if (all(c("longitude", "latitude") %in% names(df))) {
     out <- out %>%
-      summarise(longitude = mean(longitude,na.rm = TRUE),
-                latitude = mean(latitude, na.rm = TRUE),
-                reflect = mean(reflect, na.rm = TRUE)
-                ) %>%
+      summarise(
+        longitude = mean(longitude, na.rm = TRUE),
+        latitude = mean(latitude, na.rm = TRUE),
+        reflect = mean(reflect, na.rm = TRUE)
+      ) %>%
       ungroup() %>%
       spread(wl, reflect)
   } else {
@@ -182,14 +183,16 @@ spc_ave <- function(spc, by = 'SampleID'){
 #'
 #' @return df with col ('wl', 'estimate', 'p.value')
 #' @export
-spc_cor <- function(spc, biochemphy){
+spc_cor <- function(spc, biochemphy) {
   df <- spc_2df(spc) %>%
-    dplyr::select(matches('\\d+')) %>%
+    dplyr::select(matches("\\d+")) %>%
     map(cor.test, SI(spc)[[biochemphy]]) %>%
-    map_df(function(fit){fit[c('estimate', 'p.value')]}, .id = 'wl') %>%
+    map_df(function(fit) {
+      fit[c("estimate", "p.value")]
+    }, .id = "wl") %>%
     mutate(wl = parse_double(wl))
 
-  names(df) <- c('wl', 'estimate', 'pvalue')
+  names(df) <- c("wl", "estimate", "pvalue")
   return(df)
 }
 
@@ -203,8 +206,8 @@ spc_cor <- function(spc, biochemphy){
 #'
 #' @return df
 #' @export
-spc_cor_stage <- function(stageValue, spc, biochemphy){
-  if(stageValue == 'full'){
+spc_cor_stage <- function(stageValue, spc, biochemphy) {
+  if (stageValue == "full") {
     spc_cor(spc, biochemphy)
   } else {
     spc_2df(spc) %>%

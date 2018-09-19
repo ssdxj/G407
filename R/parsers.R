@@ -46,7 +46,9 @@ parser_sunScan <- function(fpath) {
 
   # parse
   data_sub <- grep("^\\d{2}:\\d{2}:\\d{2}\\t\\d{1,2}", data, value = TRUE)
-  data_sub_split <- lapply(data_sub, function(x) {unlist(str_split(x, "\t"))})
+  data_sub_split <- lapply(data_sub, function(x) {
+    unlist(str_split(x, "\t"))
+  })
   df <- do.call(rbind.data.frame, data_sub_split)
   names(df) <- c(
     "Time", "ID1", "ID2", "Transmitted", "Spread", "Incident",
@@ -64,7 +66,6 @@ parser_sunScan <- function(fpath) {
   write.csv(out, fpath_new, row.names = FALSE)
 
   return(out)
-
 }
 
 #' parser of single HR1024i sig file
@@ -189,8 +190,10 @@ spc_from_sigs <- function(dat) {
   })
   for (i in 1:nspectral) {
     if (sum((wl[[i]] - wl[[1]])^2) != 0) {
-      stop(paste("The wavelength of :", names(dat)[i],
-                 "does not match the first one!!!"))
+      stop(paste(
+        "The wavelength of :", names(dat)[i],
+        "does not match the first one!!!"
+      ))
     }
   }
 
@@ -199,11 +202,15 @@ spc_from_sigs <- function(dat) {
 
   # determin reflectance data.frame
   # print("rbinding reflectance ...")
-  ref_list <- lapply(dat, function(x) {x$ref})
+  ref_list <- lapply(dat, function(x) {
+    x$ref
+  })
   ref_df <- do.call(rbind, ref_list)
 
   # determin meta data.frame
-  meta_list <- lapply(dat, function(x) {x[which(names(x) %not in% c("wl", "ref"))]})
+  meta_list <- lapply(dat, function(x) {
+    x[which(names(x) %not in% c("wl", "ref"))]
+  })
   meta_df <- do.call(rbind.data.frame, meta_list)
 
   # create speclib

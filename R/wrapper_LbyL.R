@@ -1,25 +1,25 @@
 #' stat_fun for \code{\link{wrapper_LbyL}} to calc r2 of lm fit
 #' @export
-LbyL_stat_fun_r2  <- function(x, y) {
-  summary(lm(y~x, data = data.frame(x = x, y = y)))[['r.squared']]
+LbyL_stat_fun_r2 <- function(x, y) {
+  summary(lm(y ~ x, data = data.frame(x = x, y = y)))[["r.squared"]]
 }
 
 #' resp_fun for \code{\link{wrapper_LbyL}} to calc DVI index
 #' @export
-LbyL_resp_fun_DVI <- function(b1, b2){
-  b2-b1
+LbyL_resp_fun_DVI <- function(b1, b2) {
+  b2 - b1
 }
 
 #' resp_fun for \code{\link{wrapper_LbyL}} to calc NDVI index
 #' @export
-LbyL_resp_fun_NDVI <- function(b1, b2){
-  (b2-b1)/(b2+b1)
+LbyL_resp_fun_NDVI <- function(b1, b2) {
+  (b2 - b1) / (b2 + b1)
 }
 
 #' resp_fun for \code{\link{wrapper_LbyL}} to calc SR index
 #' @export
-LbyL_resp_fun_SR <- function(b1, b2){
-  b2/b1
+LbyL_resp_fun_SR <- function(b1, b2) {
+  b2 / b1
 }
 
 
@@ -36,23 +36,22 @@ LbyL_resp_fun_SR <- function(b1, b2){
 #'
 #' @return df
 #' @export
-wrapper_LbyL <- function(spc, biochemphy, resp_fun, stat_fun, isSym = TRUE){
+wrapper_LbyL <- function(spc, biochemphy, resp_fun, stat_fun, isSym = TRUE) {
 
   # prepare data
   rep <- SI(spc)[[biochemphy]]
   wl <- wavelength(spc)
-  if(isSym){
+  if (isSym) {
     wlCombns <- combn(wl, 2, simplify = FALSE)
   } else {
     wlCombns <- expand.grid(wl1 = wl, wl2 = wl) %>%
       t() %>%
       as.data.frame() %>%
       map(function(x) unlist(x))
-
   }
 
-  wrapper_fun <- function(obj){
-    if(obj[[1]] == obj[[2]]){
+  wrapper_fun <- function(obj) {
+    if (obj[[1]] == obj[[2]]) {
       out <- c(obj, NA)
     } else {
       # reflectance of wl1
@@ -64,7 +63,7 @@ wrapper_LbyL <- function(spc, biochemphy, resp_fun, stat_fun, isSym = TRUE){
       vi <- resp_fun(b1 = b1, b2 = b2)
 
       # fit lm and ready out
-      r2 <-  stat_fun(vi, rep)
+      r2 <- stat_fun(vi, rep)
 
       out <- c(obj, r2)
     }
@@ -75,8 +74,7 @@ wrapper_LbyL <- function(spc, biochemphy, resp_fun, stat_fun, isSym = TRUE){
 
   # tidy out
   df <- do.call(rbind, out)
-  colnames(df) <- c('wl1', 'wl2', 'r2')
+  colnames(df) <- c("wl1", "wl2", "r2")
 
   return(df)
-
 }

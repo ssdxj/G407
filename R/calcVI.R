@@ -6,7 +6,7 @@
 #'
 #' @return vi vector
 #' @export
-calcVI <- function(index, spc, sensor = 'SVC', ...) {
+calcVI <- function(index, spc, sensor = "SVC", ...) {
 
   # define VIs --------------------------------------------------------------
 

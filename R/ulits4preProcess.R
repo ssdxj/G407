@@ -64,8 +64,9 @@ get_inTrain_respOrder_withGroup <- function(input, group, step = 4, start = 2) {
 get_inTrain_fromTestSPC <- function(input_full, input_Test) {
   if (is.speclib(input_full)) input_full <- SI(input_full)
   if (is.speclib(input_Test)) input_Test <- SI(input_Test)
-  if (!is.data.frame(input_full) | !is.data.frame(input_Test))
+  if (!is.data.frame(input_full) | !is.data.frame(input_Test)) {
     stop("input param error!!!")
+  }
 
   input_full$index <- 1:nrow(input_full)
 
@@ -118,10 +119,9 @@ get_indexCV <- function(x, folds = 10, times = 5) {
 #'
 #' @return list(inTrain, spc_full, indexCV)
 #'
-#'@export
+#' @export
 prepare_obj4wf <- function(spc, biochemphy, group, folds, times, isSplit) {
-
-  if(isSplit){
+  if (isSplit) {
     # get inTrain index
     y <- SI(spc)[[biochemphy]]
     group <- SI(spc)[[group]]
@@ -148,4 +148,3 @@ prepare_obj4wf <- function(spc, biochemphy, group, folds, times, isSplit) {
 
   return(out)
 }
-
