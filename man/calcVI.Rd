@@ -4,14 +4,12 @@
 \alias{calcVI}
 \title{vegetion index calculation handler}
 \usage{
-calcVI(index, spc, sensor = "SVC", ...)
+calcVI(index, spc, ...)
 }
 \arguments{
 \item{index:}{name of index, used to match function}
 
 \item{spc:}{spc obj}
-
-\item{sensor:}{in c('SVC', 'SEN', 'LS8') to match bands}
 }
 \value{
 vi vector
