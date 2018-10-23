@@ -70,6 +70,7 @@ wrapper_LbyL <- function(spc, biochemphy, resp_fun, stat_fun, isSym = TRUE) {
     return(out)
   }
 
+  plan(multiprocess)
   out <- furrr::future_map(wlCombns, wrapper_fun, .progress = TRUE)
 
   # tidy out
