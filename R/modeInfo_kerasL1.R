@@ -54,6 +54,7 @@ modelInfo_kerasL1 <- function() {
         keras::layer_dense(
           units = param$units01,
           kernel_initializer = keras::initializer_glorot_normal(seed = 666),
+          kernel_regularizer = keras::regularizer_l1(),
           activation = "relu",
           input_shape = ncol(x)
         ) %>%
