@@ -40,6 +40,10 @@ calcVI <- function(index, spc, ...) {
     } else if(index == 'CI_re'){
       re <- get_reflectance(spc, wavelength = 743, weighted = weighted)
       out <- bNIR / re - 1
+    } else if(index == 'RDVI'){
+      a <- (bNIR-bR)/(bNIR+bR)
+      b <- bNIR - bR
+      out <- sqrt(a*b)
     } else if(index == 'MCARI_hab'){
       # Haboudane et al.(2004)
       num <- 1.5 * (2.5 * (bNIR - bR) - 1.3 * (bNIR - bG))
