@@ -7,7 +7,8 @@
 train_add_gof(train_obj)
 }
 \arguments{
-\item{train_obj}{caret::train obj(updated version with add_trainDf and add_testDf)}
+\item{train_obj}{caret::train (caret::rfe) obj
+(updated version with add_trainDf and add_testDf)}
 }
 \value{
 df

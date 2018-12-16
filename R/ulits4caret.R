@@ -103,12 +103,13 @@ train_add_curveDf <- function(train_obj) {
 
 #' get train and test gof from fit obj (depend add_trainDf and add_testDf in fit obj)
 #'
-#' @param  train_obj caret::train obj(updated version with add_trainDf and add_testDf)
+#' @param  train_obj caret::train (caret::rfe) obj
+#' (updated version with add_trainDf and add_testDf)
 #'
 #' @return df
 #' @export
 train_add_gof <- function(train_obj) {
-  perfNames <- c("RMSE", "Rsquared", "MAE")
+  perfNames <- train_obj$perfNames
 
   if (is.null(train_obj$add_trainDf)) return("NA")
 
@@ -125,11 +126,18 @@ train_add_gof <- function(train_obj) {
   }
 
   # Train CV gof
-  bestPerf <- train_obj$bestTune
-  if (!is.data.frame(bestPerf)) bestPerf <- as.data.frame(bestPerf)
-  colnames(bestPerf) <- gsub("^\\.", "", colnames(bestPerf))
-  out3 <- merge(train_obj$results, bestPerf) %>% dplyr::select(one_of(perfNames))
-  colnames(out3) <- paste("CV", colnames(out3), sep = "")
+  if(inherits(train_obj, 'train')){
+    bestPerf <- train_obj$bestTune
+    if (!is.data.frame(bestPerf)) bestPerf <- as.data.frame(bestPerf)
+    colnames(bestPerf) <- gsub("^\\.", "", colnames(bestPerf))
+    out3 <- merge(train_obj$results, bestPerf) %>% dplyr::select(one_of(perfNames))
+    colnames(out3) <- paste("CV", colnames(out3), sep = "")
+  } else if(inherits(train_obj, 'rfe')){
+    optsize <- train_obj$optsize
+    out3 <- dplyr::filter(train_obj$results, Variables == optsize) %>%
+      dplyr::select(one_of(perfNames))
+    colnames(out3) <- paste("CV", colnames(out3), sep = "")
+  }
 
   if (!is.null(out2)) {
     out <- c(out1, out2, out3) %>% map_df(cbind)
@@ -215,17 +223,20 @@ train_update <- function(train_obj, spc_inTrain, spc_Test, newdata, biochemphy,
 
 
   # calc param
-  if (train_obj$method == "bear") {
-    param <- train_add_coefs(train_obj)
-  } else {
-    param <- train_add_param(train_obj)
-  }
-  train_obj$param <- param
-  train_obj$add_gof2 <- c(gof, param = param) %>% as.data.frame()
+  if(inherits(train_obj, 'train')){
+    if (train_obj$method == "bear") {
+      param <- train_add_coefs(train_obj)
+    } else {
+      param <- train_add_param(train_obj)
+    }
+    train_obj$param <- param
+    train_obj$add_gof2 <- c(gof, param = param) %>% as.data.frame()
 
-  # calc curveDf
-  curveDf <- train_add_curveDf(train_obj)
-  train_obj$add_curveDf <- curveDf
+    # calc curveDf
+    curveDf <- train_add_curveDf(train_obj)
+    train_obj$add_curveDf <- curveDf
+  }
+
 
 
   return(train_obj)
