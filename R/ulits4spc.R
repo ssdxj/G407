@@ -216,3 +216,62 @@ spc_cor_stage <- function(stageValue, spc, biochemphy) {
       spc_cor(biochemphy)
   }
 }
+
+#'  plot hsdar::speclib obj (one line per on record)
+#'
+#' @param spc  hsdar::speclib obj
+#' @param mask NA or vector
+#'
+#' @return ggplot
+#' @export
+#'
+#' @examples
+spc_plot <- function(spc, mask = NA){
+
+  # adding ID for group, then melt
+  df <- spc_2df(spc) %>%
+    mutate(group = 1:nspectra(spc) %>% as.character()) %>%
+    spc_melt()
+
+  df <- spcdf_mask2NA(df, mask = mask)
+
+  # do plot
+  ggplot(df) +
+    geom_line(aes(wl, reflect, group = group)) +
+    labs(x = 'Wavelength(nm)', y = 'Reflectance')
+
+}
+
+
+#'  change the reflectance of masked bands to NA
+#'
+#' @param input spc or melt spc_df
+#' @param mask  NA or vector
+#'
+#' @return df
+#' @export
+#'
+#' @examples
+spcdf_mask2NA <- function(input, mask = NA){
+  if(inherits(input, 'Speclib')) input <- spc_melt(input)
+
+  # band within mask change to NA
+  # thus can be easily handled by ggplot2
+  while(length(mask) >= 2){
+    lower <- mask[1]
+    upper <- mask[2]
+    mask <- mask[c(-1, -2)]
+
+    # help function to use mutate
+    foo <- function(wl, reflect, lower, upper){
+      flag <- wl >= lower & wl <= upper
+      reflect[flag] <- NA
+      return(reflect)
+    }
+
+    input <- mutate(input, reflect = foo(wl, reflect, lower, upper))
+  }
+
+  return(input)
+
+}
