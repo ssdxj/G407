@@ -23,6 +23,37 @@ spc_2df <- function(spc) {
 }
 
 
+spc_2df4plot <- function(spc) {
+  out <- NULL
+  attri <- SI(spc)
+  ref <- spectra(spc)
+
+  # incase no attri
+  if (ncol(attri) == 0) {
+    out <- as.tibble(ref)
+  } else {
+    out <- as.tibble(cbind(attri, ref))
+  }
+
+  # handle colnames
+  names(out) <- c(names(attri), hsdar::wavelength(spc))
+
+  masked <- mask(spc)
+  if(!is.null(maskVector)){
+    for(rows in 1:nrow(masked)){
+      lb <- masked$lb[rows]
+      ub <- masked$ub[rows]
+
+      NA_wl <- seq(lb+1, ub-1, by = spc@fwhm)
+      names(NA_wl) <- NA_wl
+      NA_ref <- map_df(NA_wl, ~rep(NA, times = nspectra(spc)))
+      out <- c(out, NA_ref)
+    }
+  }
+
+  return(out)
+}
+
 #' transform Speclib into data.frame (spectral columns name is in 'B_450' format)
 #'
 #' @param spc: 'speclib' obj

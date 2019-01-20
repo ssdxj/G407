@@ -97,7 +97,6 @@ modelInfo_kerasL2 <- function() {
       model %>%
         keras::fit(
           x = x,
-
           y = y,
           batch_size = floor(nrow(x) / 3),
           epochs = param$epochs,

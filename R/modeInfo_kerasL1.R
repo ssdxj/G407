@@ -56,7 +56,7 @@ modelInfo_kerasL1 <- function() {
           y = y,
           batch_size = nrow(x),
           epochs = 100,
-          verbose = 1
+          verbose = 0
           )
 
       if (last)  model <- keras::serialize_model(model)
