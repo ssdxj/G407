@@ -9,13 +9,14 @@ modelInfo_kerasL1 <- function() {
 
   # define parameters ---------------------------------------------------------------------------
   modelInfo$parameters <- data.frame(
-    parameter = c("units01"),
-    class = c("numeric"),
-    label = c("#Hidden Units in Layer1")
+    parameter = c("units01", "epochs"),
+    class = c("numeric", "numeric"),
+    label = c("#Hidden Units in Layer1", "epochs")
   )
 
   modelInfo$grid <- function(x, y, len = NULL, search = "grid") {
-      expand.grid(units01 = 1:len)
+      expand.grid(units01 = (1:len)*2-1,
+                  epochs = 200)
   }
 
 
@@ -45,7 +46,6 @@ modelInfo_kerasL1 <- function() {
       model %>%
         keras::compile(
           loss = "mean_squared_error",
-          metrics = "mean_squared_error",
           optimizer = "adam"
           )
 
@@ -55,8 +55,8 @@ modelInfo_kerasL1 <- function() {
           x = x,
           y = y,
           batch_size = nrow(x),
-          epochs = 100,
-          verbose = 0
+          epochs = param$epochs,
+          verbose = 1
           )
 
       if (last)  model <- keras::serialize_model(model)
