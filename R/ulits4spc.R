@@ -215,16 +215,14 @@ spc_ave <- function(spc, by = "SampleID") {
 #' @return df with col ('wl', 'estimate', 'p.value')
 #' @export
 spc_cor <- function(spc, biochemphy) {
-  df <- spc_2df(spc) %>%
-    dplyr::select(matches("\\d+")) %>%
-    map(cor.test, SI(spc)[[biochemphy]]) %>%
-    map_df(function(fit) {
-      fit[c("estimate", "p.value")]
-    }, .id = "wl") %>%
-    mutate(wl = parse_double(wl))
+  ref <- spectra(spc)
+  wl <- wavelength(spc)
+  colnames(ref) <- wl
+  reps <- SI(spc)[[biochemphy]]
 
-  names(df) <- c("wl", "estimate", "pvalue")
-  return(df)
+  apply(ref, 2, cor.test, reps, na.rm = TRUE) %>%
+    map_df(function(fit){fit[c('estimate', 'p.value')]}, .id = 'wl') %>%
+    mutate(wl = parse_double(wl))
 }
 
 
@@ -241,10 +239,14 @@ spc_cor_stage <- function(stageValue, spc, biochemphy) {
   if (stageValue == "full") {
     spc_cor(spc, biochemphy)
   } else {
-    spc_2df(spc) %>%
-      dplyr::filter(stage %in% stageValue) %>%
-      spc_fromDf() %>%
-      spc_cor(biochemphy)
+    # incase no records for specific growth stage
+    df <- spc_2df(spc) %>% dplyr::filter(stage %in% stageValue)
+
+    # if so return NULL
+    if(nrow(df) == 0) return(NULL)
+
+    # else
+    spc_cor(spc_fromDf(df), biochemphy)
   }
 }
 
