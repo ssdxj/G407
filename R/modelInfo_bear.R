@@ -27,14 +27,27 @@ modelInfo_bear <- function() {
     x_lower <- min(x)
     x_sd <- sd(x)
 
-    nlsLM(.outcome ~ -1 / (K_VI) * log((VI_inf - x) / (VI_inf - VI_bare)),
-      data = dat,
-      trace = FALSE,
-      control = nls.lm.control(maxiter = 1024),
-      start = c(VI_inf = x_upper + x_sd * 3, VI_bare = x_lower - x_sd * 3, K_VI = 0.2),
-      lower = c(VI_inf = x_upper, VI_bare = x_lower - x_sd * 10, K_VI = -1),
-      upper = c(VI_inf = x_upper + x_sd * 10, VI_bare = x_lower, K_VI = 3)
-    )
+    if(cor(x, y) > 0){
+
+      nlsLM(.outcome ~ -1 / (K_VI) * log((VI_inf - x) / (VI_inf - VI_bare)),
+        data = dat,
+        trace = FALSE,
+        control = nls.lm.control(maxiter = 1024),
+        start = c(VI_inf = x_upper + x_sd * 3, VI_bare = x_lower - x_sd * 3, K_VI = 0.2),
+        lower = c(VI_inf = x_upper, VI_bare = x_lower - x_sd * 10, K_VI = -1),
+        upper = c(VI_inf = x_upper + x_sd * 10, VI_bare = x_lower, K_VI = 3)
+      )
+    } else {
+      nlsLM(.outcome ~ -1 / (K_VI) * log((x - VI_bare) / (VI_inf - VI_bare)),
+        data = dat,
+        trace = FALSE,
+        control = nls.lm.control(maxiter = 1024),
+        start = c(VI_inf = x_upper + x_sd * 3, VI_bare = x_lower - x_sd * 3, K_VI = 0.2),
+        lower = c(VI_inf = x_upper, VI_bare = x_lower - x_sd * 10, K_VI = -1),
+        upper = c(VI_inf = x_upper + x_sd * 10, VI_bare = x_lower, K_VI = 3)
+      )
+
+    }
   }
 
   # predict

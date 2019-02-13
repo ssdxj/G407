@@ -90,8 +90,12 @@ train_add_curveDf <- function(train_obj) {
     VI_bare <- coefs["VI_bare"]
     K_VI <- coefs["K_VI"]
     # calc y
-    y <- -1 / K_VI * log((VI_inf - x) / (VI_inf - VI_bare))
-    y <- predict(train_obj, newdata = data.frame(x = x))
+
+    if(cor(train_obj$add_trainDf$vi, train_obj$add_trainDf$obs) > 0){
+      y <- -1 / K_VI * log((VI_inf - x) / (VI_inf - VI_bare))
+    } else {
+      y <- -1 / K_VI * log((x - VI_bare) / (VI_inf - VI_bare))
+    }
     out <- data.frame(x, y)
   } else {
     out <- NULL
