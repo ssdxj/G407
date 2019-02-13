@@ -257,8 +257,6 @@ spc_cor_stage <- function(stageValue, spc, biochemphy) {
 #'
 #' @return ggplot
 #' @export
-#'
-#' @examples
 spc_plot <- function(spc, mask = NA){
 
   # adding ID for group, then melt
@@ -283,8 +281,6 @@ spc_plot <- function(spc, mask = NA){
 #'
 #' @return df
 #' @export
-#'
-#' @examples
 spcdf_mask2NA <- function(input, mask = NA){
   if(inherits(input, 'Speclib')) input <- spc_melt(input)
 
